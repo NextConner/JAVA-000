@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class HomeWork03 {
+public class HomeWork04 {
 
 
     // 线程池提交callable任务阻塞get()
@@ -180,7 +180,6 @@ public class HomeWork03 {
         return;
     }
 
-
     //condition 条件等待
     public static void main7(String[] args) {
 
@@ -255,13 +254,46 @@ public class HomeWork03 {
         return;
     }
 
+    //阻塞队列
+    public static void main9(String[] args) throws InterruptedException {
 
-    public static void main(String[] args) {
+        long start = System.currentTimeMillis();
+        // 在这里创建一个线程或线程池，
+        // 异步执行 下面方法
+        ArrayBlockingQueue<Integer> tasks = new ArrayBlockingQueue<>(1);
+        new Thread(()->{
+            try {
+                tasks.put(sum());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        // 确保  拿到result 并输出
+        System.out.println("异步计算结果为：" + tasks.take());
+        System.out.println("使用时间：" + (System.currentTimeMillis() - start) + " ms");
+        // 然后退出main线程
+        return;
+    }
+
+    //wait/notify
+    public static void main10(String[] args) throws InterruptedException {
 
         long start = System.currentTimeMillis();
         // 在这里创建一个线程或线程池，
         // 异步执行 下面方法
         final int[] result = {0};
+        new Thread(()->{
+            synchronized (result){
+                result[0] = sum();
+                result.notify();
+            }
+        }).start();
+        synchronized (result){
+            if(result[0]==0){
+                result.wait();
+            }
+        }
 
         // 确保  拿到result 并输出
         System.out.println("异步计算结果为：" + result[0]);
@@ -269,6 +301,20 @@ public class HomeWork03 {
         // 然后退出main线程
         return;
     }
+
+    public static void main(String[] args) throws InterruptedException {
+
+        long start = System.currentTimeMillis();
+        // 在这里创建一个线程或线程池，
+        // 异步执行 下面方法
+        final int[] result = {0};
+        // 确保  拿到result 并输出
+        System.out.println("异步计算结果为：" + result[0]);
+        System.out.println("使用时间：" + (System.currentTimeMillis() - start) + " ms");
+        // 然后退出main线程
+        return;
+    }
+
 
     private static int sum() {
         return fibo(36);
