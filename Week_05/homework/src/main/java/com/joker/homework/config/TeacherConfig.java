@@ -16,7 +16,7 @@ public class TeacherConfig {
     public Teacher teacher(){
         Teacher teacher = new Teacher();
         teacher.setName("英语老师");
-        teacher.setSexy("sexy 99.99%");
+        teacher.setSexy("99.99%");
         return teacher;
     }
 

@@ -1,4 +1,4 @@
-package com.joker.homework.annoatation;
+package com.joker.homework.annotation;
 
 import java.lang.annotation.*;
 
@@ -12,6 +12,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface SimpleTransaction {
 
-    boolean open = true;
+    boolean open() default true;
 
 }
