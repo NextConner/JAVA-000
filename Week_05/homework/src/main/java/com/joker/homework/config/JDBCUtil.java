@@ -213,15 +213,12 @@ public class JDBCUtil {
 
             for (Object[] param : params) {
                 for (int i = 0; i < param.length; i++) {
-                    preparedStatement.setObject(i, param[i]);
+                    preparedStatement.setObject(i+1, param[i].toString());
                 }
                 batchSize--;
                 preparedStatement.addBatch();
-                if (batchSize == 0) {
-                    preparedStatement.executeBatch();
-                    batchSize = 200;
-                }
             }
+            preparedStatement.executeBatch();
             batchResult = 1;
         } catch (Exception e) {
             throw e;

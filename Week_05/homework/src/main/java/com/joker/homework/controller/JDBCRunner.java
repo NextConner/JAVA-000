@@ -3,14 +3,12 @@ package com.joker.homework.controller;
 import com.joker.homework.entity.Student;
 import com.joker.homework.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
+import myStarter.service.AllService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,21 +22,33 @@ public class JDBCRunner implements CommandLineRunner {
     @Autowired
     private StudentService service;
 
+    /**
+     *   引入的自定义stater中的对象
+      */
+    @Autowired
+    private AllService allService;
+
     @Override
     public void run(String... args) throws Exception {
 
+        //测试starter 是否有效
+        log.info(allService.getSchool().toString());
+
         //测试事务是否开启
-        String batchInsertSQL = "INSERT INTO student VALUES(:id,:name,:age,:sex)";
-//        String[][] params = new String[10][4];
-//
-//        for(int i=0;i<10;i++){
-//            String[] param = new String[4];
-//            param[0] = UUID.randomUUID().toString().substring(0,6);
-//            param[1] = "name" +i;
-//            param[2] = String.valueOf(i*(new Random().nextInt(40)));
-//            param[3] = "1";
-//            params[0] = param;
-//        }
+        String batchSQL = "INSERT INTO student VALUES(?,?,?,?)";
+        String[][] params = new String[10][4];
+
+        for(int i=0;i<10;i++){
+            String[] param = new String[4];
+            param[0] = UUID.randomUUID().toString().substring(0,6);
+            param[1] = "name" +i;
+            param[2] = String.valueOf(i*(new Random().nextInt(5)));
+            param[3] = "1";
+            params[i]=param;
+        }
+
+//        log.info("batch insert result:{}",service.batch(batchSQL,params));
+
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("id",UUID.randomUUID());
         paramMap.put("name","增后删除");
@@ -64,10 +74,11 @@ public class JDBCRunner implements CommandLineRunner {
                 e.printStackTrace();
             }
         }).start();
-        //以事务方式执行数据插入,插入后 sleep 5 秒再提交事务
-        service.insertThenDel(batchInsertSQL,"student",paramMap);
+        String insertSQL = "INSERT INTO student VALUES(:id,:name,:age,:sex)";
+        //以事务方式执i行数据插入,插入后 sleep 5 秒再提交事务
+//        service.insertThenDel(insertSQL,"student",paramMap);
         //删除数据
-        service.updateThenDel("DELETE FROM student");
+//        service.updateThenDel("DELETE FROM student");
     }
 
 

@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,19 +33,30 @@ public class JdbcProxy extends JDBCUtil {
         return false;
     }
 
+    @Override
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     /**
      *  batch execute with transaction
       */
-    @Override
-    public int batchExec(Connection connection, String sql, Object[][] params) throws SQLException {
+    public int batchExec(String sql, Object[][] params) throws Exception {
+        if(!checkConnection()){
+            return -1;
+        }
         int result = -1;
         try{
-            connection.setAutoCommit(false);
+//            connection.setAutoCommit(false);
             result = super.batchExec(connection, sql, params);
-            connection.commit();
+//            connection.commit();
         }catch (Exception e){
             log.error("execution exception : {}",e);
-            connection.rollback();
+//            connection.rollback();
         }finally {
             try{
                 super.returnConn(connection);

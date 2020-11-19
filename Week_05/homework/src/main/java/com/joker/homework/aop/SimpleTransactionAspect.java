@@ -9,8 +9,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 
@@ -22,11 +24,13 @@ import java.sql.Connection;
 @Aspect
 public class SimpleTransactionAspect {
 
+    @Autowired
+    private DataSource source;
+
     @Pointcut("@annotation(com.joker.homework.annotation.SimpleTransaction)")
     public void jdbcProxyCut() {
     }
 
-    ;
 
     @Around("jdbcProxyCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Exception {
@@ -46,7 +50,9 @@ public class SimpleTransactionAspect {
             field.setAccessible(true);
             if (field.get(proxy) instanceof Connection) {
                 //获取当前connection 对象，开启事务
-                Connection connection = (Connection) field.get(proxy);
+//                Connection connection = (Connection) field.get(proxy);
+                //从数据源重新获取一个新的连接
+                Connection connection = source.getConnection();
                 connection.setAutoCommit(false);
                 try {
                     result = joinPoint.proceed();

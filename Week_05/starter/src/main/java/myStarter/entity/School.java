@@ -1,12 +1,10 @@
 package myStarter.entity;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @ConfigurationProperties(prefix = "school")
 @Component
-@ConditionalOnProperty(prefix = "school",name = "isopen" )
 public class School {
 
     private String name;
@@ -26,5 +24,13 @@ public class School {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "School{" +
+                "name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 }

@@ -6,6 +6,7 @@ import com.joker.homework.aop.JdbcProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -37,6 +38,27 @@ public class StudentService {
 
     public List<Map<String,Object>> getAll(String sql,Class returnType) throws Exception {
         return proxy.select(sql,returnType);
+    }
+
+    @SimpleTransaction(open = true)
+    public int batch(String sql,Object[][] params){
+
+        try{
+            return proxy.batchExec(sql,params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int batch(Connection connection, String sql, Object[][] params){
+
+        try{
+            return proxy.batchExec(connection,sql,params);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return -1;
     }
 
 }

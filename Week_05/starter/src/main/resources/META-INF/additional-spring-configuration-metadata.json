@@ -1,0 +1,14 @@
+{
+  "properties":[
+    {
+      "name":"school.name",
+      "type":"java.lang.String",
+      "description":"name 属性"
+    },
+    {
+      "name":"school.location",
+      "type":"java.lang.String",
+      "description":"location 属性"
+    }
+  ]
+}
