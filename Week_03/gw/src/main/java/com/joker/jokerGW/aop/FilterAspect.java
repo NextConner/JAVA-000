@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @Aspect
+@Component
 public class FilterAspect {
 
     @Autowired
@@ -48,7 +50,7 @@ public class FilterAspect {
             FilterEnableAnnotation annotation = signature.getMethod().getAnnotation(FilterEnableAnnotation.class);
             if(null != annotation){
                 //获取过滤器所需参数
-                Method method  = signature.getMethod();
+
             }
             LinkedList<RequestFilter> filters = filterService.getProviderProperties().getFilterChines();
             Stream stream = filters.parallelStream();

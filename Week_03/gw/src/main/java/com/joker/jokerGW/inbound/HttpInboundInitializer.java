@@ -1,15 +1,12 @@
 package com.joker.jokerGW.inbound;
 
-
-import com.joker.jokerGW.filter.HttpRequestFilter;
-import com.joker.jokerGW.filter.impl.EasyAuthRequestFilter;
-import com.joker.jokerGW.outbound.okhttp.NettyHttpOutboundHandler;
-import com.joker.jokerGW.router.RouterStrategy;
+import com.jokerGW.filter.filter.impl.EasyAuthRequestFilter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import com.jokerGW.filter.filter.RequestFilter;
 
 import java.util.LinkedList;
 
@@ -20,7 +17,7 @@ public class HttpInboundInitializer extends ChannelInitializer<SocketChannel> {
 	private String proxyServer;
 
     // 过滤器链
-    private LinkedList<HttpRequestFilter> filters;
+    private LinkedList<RequestFilter> filters;
 
 
 	public HttpInboundInitializer(String proxyServer) {
