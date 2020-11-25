@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2020-11-25 00:08:42
+Date: 2020-11-25 08:40:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `commodity`;
 CREATE TABLE `commodity` (
-  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` bigint(32) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `store_id` int(32) NOT NULL COMMENT '商品所属店铺ID',
   `store_name` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '商品所属店铺名称',
   `first_name` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '商品名称',
@@ -31,7 +31,7 @@ CREATE TABLE `commodity` (
   `status` tinyint(1) unsigned NOT NULL COMMENT '上下架状态：1：上架；0:下架',
   `stock` int(8) NOT NULL COMMENT '库存',
   `sku_id` bigint(16) NOT NULL COMMENT 'skuID',
-  `sku_info` varchar(255) COLLATE utf8_bin NOT NULL COMMENT 'sku 信息',
+  `sku_info` text COLLATE utf8_bin NOT NULL COMMENT 'sku 信息',
   `price` decimal(16,2) NOT NULL COMMENT '基础价',
   `sale_price` decimal(16,2) NOT NULL COMMENT '销售价',
   `cover_img` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '商品封面图',
@@ -40,8 +40,10 @@ CREATE TABLE `commodity` (
   `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '商品的创建时间',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '商品的更新时间',
   PRIMARY KEY (`id`) USING BTREE,
-  KEY `idx_name` (`first_name`,`sub_name`,`full_name`) USING BTREE,
-  KEY `idx_price` (`sale_price`) USING BTREE
+  KEY `idx_price` (`sale_price`) USING BTREE,
+  KEY `idx_name` (`first_name`,`sub_name`,`full_name`,`brand_info`,`create_time`,`update_time`) USING BTREE COMMENT '搜索索引',
+  KEY `idx_time` (`create_time`,`update_time`),
+  KEY `uk_id` (`id`,`sku_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -50,7 +52,7 @@ CREATE TABLE `commodity` (
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `id` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '订单id',
-  `user_id` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '用户id',
+  `user_id` bigint(32) unsigned NOT NULL COMMENT '用户id',
   `user_name` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '用户名',
   `nick_name` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '用户昵称',
   `phone` bigint(11) NOT NULL COMMENT '手机号码',
@@ -69,7 +71,8 @@ CREATE TABLE `order` (
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '订单更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_price` (`pay_price`) USING BTREE COMMENT '订单支付金额',
-  KEY `idx_name_status_time` (`status`,`create_time`,`update_time`) USING BTREE COMMENT '组合索引'
+  KEY `idx_name_status_time` (`status`,`create_time`,`update_time`) USING BTREE COMMENT '组合索引',
+  KEY `idx_user_id` (`user_id`) USING BTREE COMMENT '用户id索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
@@ -79,14 +82,15 @@ DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail` (
   `id` bigint(32) NOT NULL AUTO_INCREMENT,
   `order_id` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '订单ID',
-  `comdi_id` bigint(32) NOT NULL COMMENT '商品id',
+  `comdi_id` bigint(32) unsigned NOT NULL COMMENT '商品id',
   `comdi_name` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '商品名称',
   `store_name` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '商品所属店铺名称',
-  `sku_info` varchar(255) COLLATE utf8_bin NOT NULL COMMENT '交易时sku信息',
+  `sku_info` text COLLATE utf8_bin NOT NULL COMMENT '交易时sku信息',
   `price` decimal(10,2) NOT NULL COMMENT '商品价格',
   `sell_price` decimal(10,2) NOT NULL COMMENT '交易价格',
   `num` int(16) NOT NULL COMMENT '交易数量',
   `discount` decimal(10,2) NOT NULL COMMENT '优惠金额',
+  `shipping` decimal(10,2) NOT NULL COMMENT '商品运费',
   `total_price` decimal(10,2) NOT NULL COMMENT '当前商品总价',
   `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -100,7 +104,7 @@ CREATE TABLE `order_detail` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` varchar(32) COLLATE utf8_bin NOT NULL COMMENT '主键',
+  `id` bigint(32) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `id_card` varchar(18) COLLATE utf8_bin NOT NULL,
   `user_name` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '用户名',
   `nick_name` varchar(64) COLLATE utf8_bin NOT NULL,
