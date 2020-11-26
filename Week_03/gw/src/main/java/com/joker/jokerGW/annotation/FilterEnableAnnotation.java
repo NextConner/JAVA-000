@@ -1,4 +1,4 @@
-package com.joker.jokerGW.annotation;
+package com.joker.jokergw.annotation;
 
 import java.lang.annotation.*;
 

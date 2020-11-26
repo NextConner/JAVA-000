@@ -1,6 +1,6 @@
-package com.joker.jokerGW.router;
+package com.joker.jokergw.router;
 
-import com.joker.jokerGW.router.impl.RandomRouter;
+import com.joker.jokergw.router.impl.RandomRouter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,8 @@ public class HttpEndpointRouterHandler {
 
         HttpEndpointRouter router = new RandomRouter();
         try {
-            Object obj  = Class.forName(strategy.getStrategyKey()).newInstance();
+            Class clazz  = Class.forName("com.joker.jokergw.router.impl." + strategy.getStrategyKey());
+            Object obj = clazz.newInstance();
             if(null != obj){
                 router = (HttpEndpointRouter)obj;
             }

@@ -1,4 +1,4 @@
-package com.joker.jokerGW.outbound.httpclient4;
+package com.joker.jokergw.outbound.httpclient4;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;

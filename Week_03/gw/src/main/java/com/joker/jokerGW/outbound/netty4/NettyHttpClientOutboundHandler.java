@@ -1,11 +1,13 @@
-package com.joker.jokerGW.outbound.netty4;
+package com.joker.jokergw.outbound.netty4;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/**
+ * @author TaoGeZou
+ */
+
 public class NettyHttpClientOutboundHandler  extends ChannelInboundHandlerAdapter {
-
-
 
     @Override
     public void channelActive(ChannelHandlerContext ctx)

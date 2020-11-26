@@ -1,8 +1,9 @@
-package com.joker.jokerGW.outbound.okhttp;
+package com.joker.jokergw.outbound.okhttp;
 
-import com.joker.jokerGW.outbound.IOutBoundHandler;
-import com.joker.jokerGW.router.HttpEndpointRouterHandler;
-import com.joker.jokerGW.router.RouterStrategy;
+import com.joker.jokergw.annotation.FilterEnableAnnotation;
+import com.joker.jokergw.outbound.IOutBoundHandler;
+import com.joker.jokergw.router.HttpEndpointRouterHandler;
+import com.joker.jokergw.router.RouterStrategy;
 import com.jokerGW.filter.filter.impl.EasyAuthRequestFilter;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -42,7 +43,9 @@ public class OkHttpOutboundHandler extends ChannelInboundHandlerAdapter implemen
      */
     private RouterStrategy strategy = null;
 
-    //okhttpClient
+    /**
+     * okHttpClient
+     */
     private static OkHttpClient okHttpClient;
 
     static {
@@ -72,6 +75,7 @@ public class OkHttpOutboundHandler extends ChannelInboundHandlerAdapter implemen
         }
     }
 
+    @FilterEnableAnnotation
     @Override
     public void handle(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
         //获取代理服务器地址

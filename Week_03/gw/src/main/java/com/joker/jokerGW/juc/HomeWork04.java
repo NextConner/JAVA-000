@@ -1,4 +1,4 @@
-package com.joker.jokerGW.juc;
+package com.joker.jokergw.juc;
 
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Condition;

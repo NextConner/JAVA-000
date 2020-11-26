@@ -1,4 +1,4 @@
-package com.joker.jokerGW.outbound.httpclient4;
+package com.joker.jokergw.outbound.httpclient4;
 
 
 import io.netty.buffer.Unpooled;

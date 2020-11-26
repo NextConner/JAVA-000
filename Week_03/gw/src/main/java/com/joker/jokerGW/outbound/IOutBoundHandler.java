@@ -1,7 +1,7 @@
-package com.joker.jokerGW.outbound;
+package com.joker.jokergw.outbound;
 
 
-import com.joker.jokerGW.router.RouterStrategy;
+import com.joker.jokergw.router.RouterStrategy;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import org.apache.http.HttpResponse;

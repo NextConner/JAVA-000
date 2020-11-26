@@ -1,4 +1,4 @@
-package com.joker.jokerGW.router;
+package com.joker.jokergw.router;
 
 import java.util.List;
 

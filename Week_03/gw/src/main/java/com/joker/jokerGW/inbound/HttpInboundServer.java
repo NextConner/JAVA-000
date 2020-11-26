@@ -1,4 +1,4 @@
-package com.joker.jokerGW.inbound;
+package com.joker.jokergw.inbound;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -12,8 +12,11 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-
+/**
+ * @author TaoGeZou
+ */
 public class HttpInboundServer {
     private static Logger logger = LoggerFactory.getLogger(HttpInboundServer.class);
 
@@ -26,7 +29,7 @@ public class HttpInboundServer {
         this.proxyServer = proxyServer;
     }
 
-    public void run() throws Exception {
+    public void run(HttpInboundInitializer inboundInitializer) throws Exception {
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(5);
         EventLoopGroup workerGroup = new NioEventLoopGroup(16);
@@ -44,7 +47,7 @@ public class HttpInboundServer {
                     .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new HttpInboundInitializer(this.proxyServer));
+                    .handler(new LoggingHandler(LogLevel.INFO)).childHandler(inboundInitializer);
 
             Channel ch = b.bind(port).sync().channel();
             logger.info("开启netty http服务器，监听地址和端口为 http://127.0.0.1:" + port + '/');

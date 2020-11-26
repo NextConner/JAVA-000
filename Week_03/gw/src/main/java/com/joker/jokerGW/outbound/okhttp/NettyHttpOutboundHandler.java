@@ -1,8 +1,8 @@
-package com.joker.jokerGW.outbound.okhttp;
+package com.joker.jokergw.outbound.okhttp;
 
-import com.joker.jokerGW.outbound.IOutBoundHandler;
-import com.joker.jokerGW.router.HttpEndpointRouterHandler;
-import com.joker.jokerGW.router.RouterStrategy;
+import com.joker.jokergw.outbound.IOutBoundHandler;
+import com.joker.jokergw.router.HttpEndpointRouterHandler;
+import com.joker.jokergw.router.RouterStrategy;
 import com.jokerGW.filter.filter.impl.EasyAuthRequestFilter;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;

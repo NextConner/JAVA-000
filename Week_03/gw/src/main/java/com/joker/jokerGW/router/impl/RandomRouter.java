@@ -1,7 +1,7 @@
-package com.joker.jokerGW.router.impl;
+package com.joker.jokergw.router.impl;
 
 
-import com.joker.jokerGW.router.HttpEndpointRouter;
+import com.joker.jokergw.router.HttpEndpointRouter;
 
 import java.util.List;
 import java.util.Random;

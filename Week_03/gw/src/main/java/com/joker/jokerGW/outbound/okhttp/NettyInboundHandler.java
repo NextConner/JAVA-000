@@ -1,4 +1,4 @@
-package com.joker.jokerGW.outbound.okhttp;
+package com.joker.jokergw.outbound.okhttp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;

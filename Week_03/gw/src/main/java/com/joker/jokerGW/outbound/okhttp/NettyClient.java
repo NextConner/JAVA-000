@@ -1,4 +1,4 @@
-package com.joker.jokerGW.outbound.okhttp;
+package com.joker.jokergw.outbound.okhttp;
 import com.jokerGW.filter.filter.impl.EasyAuthRequestFilter;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;

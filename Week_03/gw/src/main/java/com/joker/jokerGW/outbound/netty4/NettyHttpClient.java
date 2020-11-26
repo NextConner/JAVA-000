@@ -1,4 +1,4 @@
-package com.joker.jokerGW.outbound.netty4;//package io.github.kimmking.gateway.outbound;
+package com.joker.jokergw.outbound.netty4;//package io.github.kimmking.gateway.outbound;
 //
 //import io.netty.bootstrap.Bootstrap;
 //import io.netty.channel.ChannelFuture;
