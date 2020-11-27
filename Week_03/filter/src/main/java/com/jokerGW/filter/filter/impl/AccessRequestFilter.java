@@ -18,11 +18,13 @@ public class AccessRequestFilter implements RequestFilter {
     @Override
     public void filter(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
 
+        log.info("access filter {} start!",this.getClass().getName());
+
         HttpHeaders httpHeaders = fullRequest.headers();
         String host = httpHeaders.get("host");
         String requestUrl = httpHeaders.get("Request-URL");
         log.info("request info :{}",host);
-        System.out.println(this.getClass().getName());
+        log.info("access filter {} end!",this.getClass().getName());
     }
 
 }
