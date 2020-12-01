@@ -29,7 +29,7 @@ public class OrderService {
 
     //不加数据源注解
     public List<Map<String,Object>> getOrder(){
-        String SQL = "SELECT track_info FROM `order` limit 2";
+        String SQL = "SELECT track_info FROM t_user_order` limit 2";
         List<Map<String,Object>> list =  jdbcTemplate.queryForList(SQL) ;
         return list;
     }
@@ -37,7 +37,7 @@ public class OrderService {
     //不指定数据源
     @Source
     public List<Map<String,Object>> getOrderOne(){
-        String SQL = "SELECT track_info FROM `order` limit 2";
+        String SQL = "SELECT track_info FROM t_user_order limit 2";
         List<Map<String,Object>> list =  jdbcTemplate.queryForList(SQL) ;
         return list;
     }
@@ -45,7 +45,7 @@ public class OrderService {
     //指定数据源
     @Source(DataSourceType.SECONDARY)
     public List<Map<String,Object>> getOrderSecond(){
-        String SQL = "SELECT id,user_id FROM `order` limit 2";
+        String SQL = "SELECT id,user_id FROM t_user_order limit 2";
         List<Map<String,Object>> list = jdbcTemplate.queryForList(SQL) ;
         return list;
     }

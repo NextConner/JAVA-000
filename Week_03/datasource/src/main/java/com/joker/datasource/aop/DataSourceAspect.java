@@ -29,7 +29,7 @@ public class DataSourceAspect {
     @Around("dataSourceProxyCut()")
     public Object around(ProceedingJoinPoint joinPoint) {
         JSONObject json = new JSONObject();
-        log.info("================================数据源切面方法开始:{}",System.currentTimeMillis());
+        log.debug("================================数据源切面方法开始:{}",System.currentTimeMillis());
         Object result = null;
         try{
             json.put("msg","响应信息");
@@ -39,12 +39,12 @@ public class DataSourceAspect {
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             Source dataSource = signature.getMethod().getAnnotation(Source.class);
             if(null != dataSource){
-                log.info("=======================================切换至数据源:{}",dataSource.value().getType());
+                log.debug("=================================切换至数据源:{}",dataSource.value().getType());
                 DataSourceType type = dataSource.value();
                 json.put("dataSource",type.type);
                 DataSourceHolder.setDataSource(type);
             }else{
-                log.info("=======================================使用默认默认数据源！");
+                log.debug("===================================使用默认默认数据源！");
             }
             result =joinPoint.proceed();
             json.put("data",result);
@@ -55,7 +55,7 @@ public class DataSourceAspect {
         }finally {
             DataSourceHolder.clear();
         }
-        log.info("================================数据源切面方法结束:{}",System.currentTimeMillis());
+        log.debug("================================数据源切面方法结束:{}",System.currentTimeMillis());
 
         return result;
     }

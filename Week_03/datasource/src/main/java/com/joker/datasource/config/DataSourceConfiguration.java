@@ -17,11 +17,14 @@ import java.util.Map;
 /**
  * @Author: zoujintao@daoran.tv
  * @Date: 2020/11/30 12:39
+ * 自定义动态数据源配置
  */
 
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
 @Configuration
 public class DataSourceConfiguration {
+
+
 
     @Bean("dataSource")
     @ConfigurationProperties(prefix = "spring.datasource.primary")
@@ -40,7 +43,7 @@ public class DataSourceConfiguration {
      */
     @Bean
     @Primary
-    public DataSource dynamicDataSource(){
+    public DynamicDataSource dynamicDataSource(){
         Map<Object,Object> dataSourceMap = new HashMap<>(8);
         dataSourceMap.put(DataSourceType.PRIMARY.getType(),dataSource());
         dataSourceMap.put(DataSourceType.SECONDARY.getType(),secondDataSource());

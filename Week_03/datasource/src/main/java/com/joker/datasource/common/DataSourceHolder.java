@@ -19,8 +19,7 @@ public class DataSourceHolder {
     }
 
     static public String getDataSourceType(){
-        String type =  local.get();
-        return StringUtils.hasLength(type) ? DataSourceType.PRIMARY.type : type;
+        return local.get();
     }
 
     static public void clear(){
