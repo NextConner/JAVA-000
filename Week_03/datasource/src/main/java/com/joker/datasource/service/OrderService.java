@@ -3,6 +3,7 @@ package com.joker.datasource.service;
 
 import com.joker.datasource.annotation.Source;
 import com.joker.datasource.consts.DataSourceType;
+import com.joker.datasource.dao.OrderJPA;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,13 +26,23 @@ public class OrderService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Source
+
+    //不加数据源注解
     public List<Map<String,Object>> getOrder(){
         String SQL = "SELECT track_info FROM `order` limit 2";
         List<Map<String,Object>> list =  jdbcTemplate.queryForList(SQL) ;
         return list;
     }
 
+    //不指定数据源
+    @Source
+    public List<Map<String,Object>> getOrderOne(){
+        String SQL = "SELECT track_info FROM `order` limit 2";
+        List<Map<String,Object>> list =  jdbcTemplate.queryForList(SQL) ;
+        return list;
+    }
+
+    //指定数据源
     @Source(DataSourceType.SECONDARY)
     public List<Map<String,Object>> getOrderSecond(){
         String SQL = "SELECT id,user_id FROM `order` limit 2";
@@ -39,10 +50,5 @@ public class OrderService {
         return list;
     }
 
-    @Source
-    public int updateUserOrder(String userId){
-        String SQL = "UPDATE `order` SET track_info = '转运中' WHERE  user_id = ?";
-        return jdbcTemplate.update(SQL,userId);
-    }
 
 }

@@ -2,6 +2,7 @@ package com.joker.datasource.common;
 
 import com.joker.datasource.consts.DataSourceType;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 
@@ -18,7 +19,8 @@ public class DataSourceHolder {
     }
 
     static public String getDataSourceType(){
-        return local.get();
+        String type =  local.get();
+        return StringUtils.hasLength(type) ? DataSourceType.PRIMARY.type : type;
     }
 
     static public void clear(){
