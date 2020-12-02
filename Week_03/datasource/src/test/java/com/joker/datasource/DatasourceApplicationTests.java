@@ -1,5 +1,6 @@
 package com.joker.datasource;
 
+import com.joker.datasource.entity.OrderDetail;
 import com.joker.datasource.entity.UserOrder;
 import com.joker.datasource.service.OrderJPAService;
 import com.joker.datasource.service.OrderService;
@@ -109,7 +110,6 @@ class DatasourceApplicationTests {
 //        log.info("指定从库数据源 ，插入数据量:{}", orderJPAService.findUserOrdersSecond().size());
 //
 //        log.info("插入数据到从库!");
-//        orderJPAService.addUserOrdersToReadDB(orderList);
 //        log.info("再次指定从库数据源查询，插入数据量{},:" , orderJPAService.findUserOrdersSecond().size());
 
     }
@@ -163,9 +163,29 @@ class DatasourceApplicationTests {
 //        log.info("第一次查询入库数据量:{}",shardingOrderService.count());
 //        log.info("第二次查询入库数据量:{}",shardingOrderService.count());
 //        log.info("手动同步!");
-//        jdbcTemplate.update("INSERT INTO slave0.t_user_order SELECT * FROM masterdb.t_user_order");
-//        jdbcTemplate.update("INSERT INTO slave1.t_user_order SELECT * FROM masterdb.t_user_order");
 //        log.info("第三次查询入库数据量:{}",shardingOrderService.count());
     }
+
+    /**
+     * 插入100万订单数据
+     */
+    @Test
+    public void testOrderInfoQuery(){
+
+        String[] goods = {"","","","","","","",""};
+
+        List<OrderDetail> orderList = new ArrayList<>(100);
+        Random random = new Random(1000);
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000000; i++) {
+
+            OrderDetail detail = new OrderDetail();
+
+
+        }
+
+
+    }
+
 
 }

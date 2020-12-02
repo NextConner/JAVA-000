@@ -1,5 +1,7 @@
 package com.joker.datasource.entity;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import java.sql.Timestamp;
  * @Date: 2020/12/1 18:03
  */
 
+@Data
 @Entity
 @Table(name = "t_order_detail")
 public class OrderDetail {
