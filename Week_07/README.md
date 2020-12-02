@@ -1,4 +1,4 @@
-## 
+## 第七周选做-配置异步复制，半同步复制，模拟master宕机
 
 ---
 
@@ -6,7 +6,7 @@
 
 - **环境准备** ： 简单起见，用 **docker** 起了三个数据库，主 3339 ，从 3340，3341 。 参照了这篇文章：  https://www.cnblogs.com/songwenjie/p/9371422.html ， 全部运行起来 : 
 
-  ![mysql-docker](.\mysql-start.png)
+  ![mysql-docker](./mysql-start.png)
 
 - **异步复制** ：
 
