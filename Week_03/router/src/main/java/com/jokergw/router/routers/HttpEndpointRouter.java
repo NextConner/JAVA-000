@@ -1,9 +1,16 @@
 package com.jokergw.router.routers;
 
-import java.util.List;
+import com.jokergw.router.endpoint.EndPoint;
 
+/**
+ * @author TaoGeZou
+ */
 public interface HttpEndpointRouter {
-    
-    String route(List<String> endpoints);
+
+    /**
+     * 根据初始化的路由服务信息列表，进行代理服务的路由
+     * @return
+     */
+    EndPoint route();
     
 }

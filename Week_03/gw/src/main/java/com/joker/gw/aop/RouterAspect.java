@@ -1,12 +1,8 @@
 package com.joker.gw.aop;
 
 import com.joker.gw.annotation.ActiveRouter;
-import com.joker.gw.annotation.FilterEnableAnnotation;
 import com.jokergw.router.routers.HttpEndpointRouter;
-import com.jokergw.router.routers.RouterStrategy;
-import com.jokergw.router.routers.impl.RandomRouter;
 import com.jokergw.router.service.RouterService;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -50,9 +46,8 @@ public class RouterAspect {
     @Around("filterProxyCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("开始执行路由切面方法!");
-        Object obj = null;
+        Object obj;
         try {
-            FullHttpRequest request = null;
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             //获取过滤器注解
             ActiveRouter annotation = signature.getMethod().getAnnotation(ActiveRouter.class);
@@ -61,20 +56,14 @@ public class RouterAspect {
                 Object[] args = joinPoint.getArgs();
                 for (Object param : args) {
                     if (param instanceof FullHttpRequest) {
-                        Class<HttpEndpointRouter> routerClass = annotation.enableRouter();
-                        HttpEndpointRouter router = new RandomRouter();
+                        Class<? extends HttpEndpointRouter> routerClass = annotation.enableRouter();
+                        HttpEndpointRouter router = routerClass.newInstance();
                         try {
-                            HttpEndpointRouter tempRouter = routerClass.newInstance();
-                            if (null != tempRouter) {
-                                router = tempRouter;
-                            }else{
-                                log.info("未获取到{}路由实现，使用默认的随机路由策略！",routerClass.getSimpleName());
-                            }
+                            String proxyServer = router.route(Arrays.asList(proxyServerList.split(",")));
+                            ((FullHttpRequest) param).headers().add(PROXY_KEY, proxyServer);
                         } catch (Exception e) {
                             log.error("获取路由实现异常{}", e);
                         }
-                        String proxyServer = router.route(Arrays.asList(proxyServerList.split(",")));
-                        ((FullHttpRequest) param).headers().add(PROXY_KEY,proxyServer);
                     }
                 }
             }
