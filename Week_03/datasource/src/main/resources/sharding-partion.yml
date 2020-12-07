@@ -1,0 +1,69 @@
+dataSources:
+  ds0: !!org.apache.commons.dbcp.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3339/db_order;
+    username: root
+    password: 123456
+  ds0_slave0: !!org.apache.commons.dbcp.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3340/db_order
+    username: root
+    password: 123456
+  ds0_slave1: !!org.apache.commons.dbcp.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3341/db_order
+    username: root
+    password: 123456
+
+shardingRule:
+  tables:
+    t_user_order:
+      actualDataNodes: db_order.t_user_order
+      databaseStrategy:
+        inline:
+          shardingColumn: user_id
+          algorithmExpression: db_order{user_id % 16}
+      tableStrategy:
+        inline:
+          shardingColumn: order_id
+          algorithmExpression: t_user_order{order_id % 4}
+      keyGenerator:
+        type: SNOWFLAKE
+        column: order_id
+    t_order_detail:
+      actualDataNodes: db_order.t_order_detail
+      databaseStrategy:
+        inline:
+          shardingColumn: order_id
+          algorithmExpression: db_order{user_id % 16}
+      tableStrategy:
+        inline:
+          shardingColumn: order_id
+          algorithmExpression: t_order_detail{order_id % 4}
+  bindingTables:
+    - t_user_order,t_order_detail
+  broadcastTables:
+    - t_config
+
+  defaultDataSourceName: ds0
+  defaultTableStrategy:
+    none:
+  defaultKeyGenerator:
+    type: SNOWFLAKE
+    column: order_id
+
+  masterSlaveRules:
+    ms_ds0:
+      masterDataSourceName: ds0
+      slaveDataSourceNames:
+        - ds0_slave0
+        - ds0_slave1
+      loadBalanceAlgorithmType: ROUND_ROBIN
+#    ms_ds1:
+#      masterDataSourceName: ds1
+#      slaveDataSourceNames:
+#        - ds1_slave0
+#        - ds1_slave1
+#      loadBalanceAlgorithmType: ROUND_ROBIN
+props:
+  sql.show: true

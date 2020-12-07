@@ -1,6 +1,8 @@
 package com.joker.datasource.service;
 
+import com.joker.datasource.dao.OrderDetailJPA;
 import com.joker.datasource.dao.OrderJPA;
+import com.joker.datasource.entity.OrderDetail;
 import com.joker.datasource.entity.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class ShardingOrderService {
     @Autowired
     private OrderJPA orderJPA;
 
+    @Autowired
+    private OrderDetailJPA orderDetailJPA;
+
     public UserOrder addOrder(UserOrder order){
         return orderJPA.save(order);
     }
@@ -40,6 +45,14 @@ public class ShardingOrderService {
     public void syncSlave(){
         orderJPA.slave0DBWrite();
         orderJPA.slave1DBWrite();
+    }
+
+    public List<OrderDetail> addOrderDetails(List<OrderDetail> orderDetails){
+        return orderDetailJPA.saveAll(orderDetails);
+    }
+
+    public long countDate(){
+        return orderDetailJPA.count();
     }
 
 }

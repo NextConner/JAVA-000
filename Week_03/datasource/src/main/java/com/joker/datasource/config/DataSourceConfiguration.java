@@ -20,8 +20,8 @@ import java.util.Map;
  * 自定义动态数据源配置
  */
 
-@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
-@Configuration
+//@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
+//@Configuration
 public class DataSourceConfiguration {
 
 
@@ -42,7 +42,7 @@ public class DataSourceConfiguration {
      * 指定默认数据源
      */
     @Bean
-    @Primary
+//    @Primary
     public DynamicDataSource dynamicDataSource(){
         Map<Object,Object> dataSourceMap = new HashMap<>(8);
         dataSourceMap.put(DataSourceType.PRIMARY.getType(),dataSource());

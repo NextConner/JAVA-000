@@ -34,6 +34,9 @@ public class OrderDetail {
     @Column(name = "sku_info")
     String skuInfo;
     int status;
+    @Column(name = "user_id")
+    private long userId;
+
     BigDecimal price;
     @Column(name = "sell_price")
     BigDecimal sellPrice;

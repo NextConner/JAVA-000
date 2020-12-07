@@ -54,7 +54,6 @@ public class WeightRouter implements HttpEndpointRouter {
             });
         }
 
-
     }
 
     @Override

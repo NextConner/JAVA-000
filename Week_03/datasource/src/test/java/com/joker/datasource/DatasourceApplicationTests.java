@@ -194,30 +194,34 @@ class DatasourceApplicationTests {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         DateTime createTime = DateTime.parse("2020-01-01");
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000; i++) {
+        long id =0;
 
+        for (int i = 0; i < 1000000; i++) {
             OrderDetail detail = new OrderDetail();
             detail.setCondName(goods[new Random().nextInt(goods.length-1)]);
-            long commId = System.currentTimeMillis() - (random.nextLong() + random.nextLong());
-            detail.setComdId(Math.abs(commId));
+            detail.setComdId(Math.abs(new Random().nextInt(1000000000)));
             detail.setCreateTime(createTime.plusMonths(new Random().nextInt(10)).plusDays(new Random(50).nextInt()).plusSeconds(new Random().nextInt(600000)).withYear(2020).toDate());
             detail.setUpdateTime(detail.getCreateTime());
-            detail.setId(Math.abs(System.currentTimeMillis() + (new Random().nextLong() + new Random().nextLong()*new Random().nextInt(21))));
+//            detail.setId(Math.abs(System.currentTimeMillis() + (new Random().nextLong() + new Random().nextLong()*new Random().nextInt(21))));
+            detail.setId(id++);
             detail.setDiscount(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
             detail.setNum(new Random().nextInt(43));
-            detail.setOrderId(Math.abs(System.currentTimeMillis() - (random.nextLong() + random.nextLong())));
+//            detail.setOrderId(Math.abs(System.currentTimeMillis() - (random.nextLong() + random.nextLong())));
+            detail.setOrderId(Math.abs(new Random().nextInt(1000000000)));
             detail.setPrice(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
             detail.setSellPrice(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
             detail.setShipping(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
             detail.setSkuInfo("蓝色 黑底 描边 长 10 宽 3 重 4");
             detail.setStatus(new Random().nextInt(3));
             detail.setStoreName("某宝");
+            detail.setUserId(Math.abs(new Random().nextInt(1000000000)));
             detail.setTotalPrice(BigDecimal.valueOf(detail.getPrice().doubleValue()*detail.getNum()).setScale(2,BigDecimal.ROUND_HALF_UP));
 //            log.info(" {} --:{}",i,detail.toString());
             orderList.add(detail);
-            if(orderList.size()>1000) {
+            if(orderList.size()>500) {
                 try{
-                    orderDetailService.addOrderDetails(orderList);
+                    shardingOrderService.addOrderDetails(orderList);
+                    orderList.clear();
                 }catch (Exception e){
                     log.error("error:{}",e);
                 }
@@ -226,7 +230,7 @@ class DatasourceApplicationTests {
         }
 
         if(orderList.size()>0){
-            orderDetailService.addOrderDetails(orderList);
+            shardingOrderService.addOrderDetails(orderList);
         }
         log.info("插入100万数耗时{}秒",(System.currentTimeMillis()-start)/1000);
 
