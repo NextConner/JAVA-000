@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface OrderJPA extends JpaRepository<UserOrder,Long> {
+//@Repository
+public interface OrderJPA{
 
     @Query(value = " INSERT INTO slave0.t_user_order SELECT * FROM masterdb.t_user_order ",nativeQuery = true)
     public void slave0DBWrite();

@@ -20,7 +20,7 @@ import java.util.Map;
  */
 
 @Slf4j
-@Service
+//@Service
 public class OrderService {
 
     @Autowired

@@ -8,15 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+//@Service
 public class OrderDetailService {
 
-    @Autowired
-    private OrderDetailJPA orderDetailJPA;
+//    @Autowired
+//    private OrderDetailJPA orderDetailJPA;
 
-//    @Source
-    public int addOrderDetails(List<OrderDetail> orderDetailList){
-        return orderDetailJPA.saveAll(orderDetailList).size();
-    }
-
+//
 }

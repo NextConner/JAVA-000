@@ -10,9 +10,9 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Data
-@Entity
-@Table(name = "t_user_order")
+//@Data
+//@Entity
+//@Table(name = "t_user_order")
 public class UserOrder {
 
     @Id
