@@ -1,10 +1,10 @@
 hmily:
   server:
     configMode: local
-    appName: userServvice
+    appName: user-service
   #  如果server.configMode eq local 的时候才会读取到这里的配置信息.
   config:
-    appName: userServvice
+    appName: user-service
     serializer: kryo
     contextTransmittalMode: threadLocal
     scheduledThreadMax: 16
@@ -27,7 +27,7 @@ hmily:
 repository:
   database:
     driverClassName: com.mysql.jdbc.Driver
-    url : jdbc:mysql://127.0.0.1:3341/hmily?useUnicode=true&characterEncoding=utf8
+    url : jdbc:mysql://127.0.0.1:3341/hmily?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
     maxActive: 20

@@ -1,28 +1,17 @@
 package com.joker.datasource;
 
 import com.joker.datasource.entity.OrderDetail;
-import com.joker.datasource.entity.UserOrder;
-import com.joker.datasource.service.OrderDetailService;
-import com.joker.datasource.service.OrderJPAService;
-import com.joker.datasource.service.OrderService;
 import com.joker.datasource.service.ShardingOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,18 +20,19 @@ import java.util.concurrent.Executors;
 @SpringBootTest
 class DatasourceApplicationTests {
 
-//    @Autowired
+    //    @Autowired
 //    private OrderJPAService orderJPAService;
 //
     @Autowired
-    private  JdbcTemplate jdbcTemplate;
-//
+    private JdbcTemplate jdbcTemplate;
+    //
 //    @Autowired
 //    private OrderService orderService;
 //
     @Autowired
     private ShardingOrderService shardingOrderService;
-//
+
+    //
 ////    @Autowired
 ////    private OrderDetailService orderDetailService;
 //
@@ -184,69 +174,55 @@ class DatasourceApplicationTests {
 //     * 插入100万订单数据
 //     */
     @Test
-    public void testOrderInfoQuery(){
+    public void testOrderInfoQuery() {
 
-        String[] goods = {"Cooler","Adases","Hades","miniCoper","switch","PS5","GTAV"};
+        String[] goods = {"Cooler", "Adases", "Hades", "miniCoper", "switch", "PS5", "GTAV"};
 
         ExecutorService service = Executors.newFixedThreadPool(4);
 
         CopyOnWriteArrayList<OrderDetail> orderList = new CopyOnWriteArrayList();
         Random random = new Random(1000);
-        // createTime.plusMonths(new Random().nextInt(10)).plusDays(new Random(50).nextInt()).plusSeconds(new Random().nextInt(600000)).toDate().getTime())
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         DateTime createTime = DateTime.parse("2020-01-01");
         long start = System.currentTimeMillis();
-        long id =100000000;
+        long id = 1000;
 
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < 2; i++) {
             OrderDetail detail = new OrderDetail();
-            detail.setCondName(goods[new Random().nextInt(goods.length-1)]);
+            detail.setCondName(goods[new Random().nextInt(goods.length - 1)]);
             detail.setComdId(Math.abs(new Random().nextInt(1000000000)));
             detail.setCreateTime(createTime.plusMonths(new Random().nextInt(10)).plusDays(new Random(50).nextInt()).plusSeconds(new Random().nextInt(600000)).withYear(2020).toDate());
             detail.setUpdateTime(detail.getCreateTime());
-//            detail.setId(Math.abs(System.currentTimeMillis() + (new Random().nextLong() + new Random().nextLong()*new Random().nextInt(21))));
             detail.setId(id++);
-            detail.setDiscount(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
+            detail.setDiscount(BigDecimal.valueOf(random.nextDouble() * 100).setScale(2, BigDecimal.ROUND_HALF_UP));
             detail.setNum(new Random().nextInt(43));
-//            detail.setOrderId(Math.abs(System.currentTimeMillis() - (random.nextLong() + random.nextLong())));
             detail.setOrderId(Math.abs(new Random().nextInt(1000000000)));
-            detail.setPrice(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
-            detail.setSellPrice(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
-            detail.setShipping(BigDecimal.valueOf(random.nextDouble()*100).setScale(2,BigDecimal.ROUND_HALF_UP));
+            detail.setPrice(BigDecimal.valueOf(random.nextDouble() * 100).setScale(2, BigDecimal.ROUND_HALF_UP));
+            detail.setSellPrice(BigDecimal.valueOf(random.nextDouble() * 100).setScale(2, BigDecimal.ROUND_HALF_UP));
+            detail.setShipping(BigDecimal.valueOf(random.nextDouble() * 100).setScale(2, BigDecimal.ROUND_HALF_UP));
             detail.setSkuInfo("is black and weight 20 KG");
             detail.setStatus(new Random().nextInt(3));
             detail.setStoreName("TMALL");
             detail.setUserId(Math.abs(new Random().nextInt(1000000000)));
-            detail.setTotalPrice(BigDecimal.valueOf(detail.getPrice().doubleValue()*detail.getNum()).setScale(2,BigDecimal.ROUND_HALF_UP));
-//            log.info(" {} --:{}",i,detail.toString());
-//            orderList.add(detail);
+            detail.setTotalPrice(BigDecimal.valueOf(detail.getPrice().doubleValue() * detail.getNum()).setScale(2, BigDecimal.ROUND_HALF_UP));
             shardingOrderService.addOrderDetail(detail);
-//            if(orderList.size()>500) {
-//                try{
-//                    shardingOrderService.addOrderDetails(orderList);
-//                    orderList.clear();
-//                }catch (Exception e){
-//                    log.error("error:{}",e);
-//                }
-//                orderList.clear();
-//            }
         }
 
-        if(orderList.size()>0){
+        if (orderList.size() > 0) {
             shardingOrderService.addOrderDetails(orderList);
         }
-        log.info("插入100万数耗时{}秒",(System.currentTimeMillis()-start)/1000);
+        log.info("插入100万数耗时{}秒", (System.currentTimeMillis() - start) / 1000);
     }
 
 
     @Test
-    public void testSelect(){
+    public void testSelect() {
 //
 //        for(int i=0;i<100;i++){
 //            jdbcTemplate.queryForList(" SELECT id, user_id from t_order_detail where user_id = "+i+"  and order_id = " + i);
 //        }
 
-        System.out.println(jdbcTemplate.queryForObject("SELECT COUNT(1) FROM t_order_detail",Integer.class));
+        System.out.println(jdbcTemplate.queryForObject("SELECT COUNT(1) FROM t_order_detail", Integer.class));
 
     }
 

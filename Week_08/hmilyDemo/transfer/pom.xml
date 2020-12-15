@@ -2,39 +2,74 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.hmily</groupId>
+		<artifactId>spcloudDemo</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.transfer</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>transferDemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>com.transfer.demo</name>
 	<description>Demo project for transfer service</description>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>
-	</properties>
+<!--	<properties>-->
+<!--		<java.version>1.8</java.version>-->
+<!--		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>-->
+<!--	</properties>-->
 
 	<dependencies>
 		<dependency>
 			<groupId>org.dromara</groupId>
-			<artifactId>hmily-spring-boot-starter-springcloud</artifactId>
-			<version>2.1.1</version>
+			<artifactId>hmily-springcloud</artifactId>
+			<version>${hmily.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
+					<artifactId>slf4j-log4j12</artifactId></exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.dromara</groupId>-->
+<!--			<artifactId>hmily-spring-boot-starter-springcloud</artifactId>-->
+<!--			<version>2.1.1</version>-->
+<!--&lt;!&ndash;			<exclusions>&ndash;&gt;-->
+<!--&lt;!&ndash;				<exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;					<groupId>org.slf4j</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;					<artifactId>slf4j-log4j12</artifactId></exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;				<exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;					<groupId>log4j</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;					<artifactId>log4j</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;				</exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;				<exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;					<groupId>org.apache.curator</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;					<artifactId>curator-framework</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;				</exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;				<exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;					<artifactId>curator-recipes</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;					<groupId>org.apache.curator</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;				</exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;			</exclusions>&ndash;&gt;-->
+<!--		</dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.47</version>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -43,35 +78,61 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>guava</artifactId>
+					<groupId>com.google.guava</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-devtools</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
+		<!--自动配置-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -104,29 +165,25 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>hmily-demo-springcloud-order</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.transfer.demo.TransferApplication</mainClass>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-		<repository>
-			<id>central</id>
-			<name>aliyun maven</name>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-			<layout>default</layout>
-			<!-- 是否开启发布版构件下载 -->
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<!-- 是否开启快照版构件下载 -->
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
 
 </project>

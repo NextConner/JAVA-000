@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * @Date: 2020/12/10 10:05
  */
 @Repository
-public interface UserJpa  extends JpaRepository<UserWallet,Long> {
+public interface UserWalletJpa  extends JpaRepository<UserWallet,Long> {
 
 }

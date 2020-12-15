@@ -1,9 +1,8 @@
 package com.seller.demo.controller;
 
 import com.seller.demo.entity.SellerWallet;
-import com.seller.demo.service.SellerService;
+import com.seller.demo.service.impl.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

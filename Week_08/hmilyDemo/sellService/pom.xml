@@ -3,10 +3,9 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.hmily</groupId>
+		<artifactId>spcloudDemo</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>com.demo</groupId>
 	<artifactId>sellerService</artifactId>
@@ -14,22 +13,41 @@
 	<name>sellService</name>
 	<description>Demo project for sell service</description>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>
-	</properties>
+<!--	<properties>-->
+<!--		<java.version>1.8</java.version>-->
+<!--		<spring-cloud.version>Hoxton.SR7</spring-cloud.version>-->
+<!--	</properties>-->
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.dromara/hmily-spring-boot-starter-springcloud -->
+<!--				<dependency>-->
+<!--					<groupId>org.dromara</groupId>-->
+<!--					<artifactId>hmily-spring-boot-starter-springcloud</artifactId>-->
+<!--					<version>2.1.1</version>-->
+<!--&lt;!&ndash;					<exclusions>&ndash;&gt;-->
+<!--&lt;!&ndash;						<exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;							<groupId>org.slf4j</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;							<artifactId>slf4j-log4j12</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;						</exclusion>&ndash;&gt;-->
+<!--&lt;!&ndash;					</exclusions>&ndash;&gt;-->
+<!--				</dependency>-->
 		<dependency>
 			<groupId>org.dromara</groupId>
-			<artifactId>hmily-spring-boot-starter-springcloud</artifactId>
-			<version>2.1.1</version>
+			<artifactId>hmily-springcloud</artifactId>
+			<version>${hmily.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
+					<artifactId>slf4j-log4j12</artifactId></exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,27 +73,17 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>ch.qos.logback</groupId>
-					<artifactId>logback-classic</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -93,6 +101,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!--		<dependency>-->
+		<!--			<groupId>org.dromara</groupId>-->
+		<!--			<artifactId>hmily-core</artifactId>-->
+		<!--			<version>2.1.1</version>-->
+		<!--			<scope>compile</scope>-->
+		<!--		</dependency>-->
 	</dependencies>
 
 	<dependencyManagement>
@@ -115,5 +129,21 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<name>aliyun maven</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+			<layout>default</layout>
+			<!-- 是否开启发布版构件下载 -->
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<!-- 是否开启快照版构件下载 -->
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 </project>

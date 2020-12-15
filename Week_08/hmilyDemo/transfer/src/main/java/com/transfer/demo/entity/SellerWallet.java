@@ -13,7 +13,7 @@ import java.util.Date;
 public class SellerWallet {
 
         private long id;
-        private long userId;
+        private long sellerId;
         private BigDecimal income;
         private BigDecimal outcome;
         private BigDecimal fee;

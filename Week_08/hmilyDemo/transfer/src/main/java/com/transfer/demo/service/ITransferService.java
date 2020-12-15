@@ -1,5 +1,8 @@
 package com.transfer.demo.service;
 
+import com.transfer.demo.entity.SellerWallet;
+import com.transfer.demo.entity.UserWallet;
+
 import java.math.BigDecimal;
 
 /**
@@ -9,8 +12,6 @@ import java.math.BigDecimal;
 
 public interface ITransferService {
 
-    String transferToSeller(Long userId , Long sellerId, BigDecimal transferMoney);
-
-    String transferToUser(Long sellerId , Long userId, BigDecimal transferMoney);
+    boolean transferToSeller(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney);
 
 }
