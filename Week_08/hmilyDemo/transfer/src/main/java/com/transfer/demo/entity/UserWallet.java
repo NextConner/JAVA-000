@@ -13,11 +13,12 @@ import java.util.Date;
 @Data
 public class UserWallet {
 
-    private long id;
-    private long userId;
+    private Long id;
+    private Long userId;
     private BigDecimal income;
     private BigDecimal outcome;
     private BigDecimal fee;
+    private BigDecimal frozenFee;
     private Date createTime;
     private Date updateTime;
 

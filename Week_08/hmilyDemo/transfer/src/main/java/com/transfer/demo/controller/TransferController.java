@@ -34,5 +34,9 @@ public class TransferController {
         return transferBzi.transfer(userId,sellerId,transferMoney);
     }
 
+    @GetMapping("toSellerException")
+    public boolean transferToSellerWithException(Long userId, Long sellerId, BigDecimal transferMoney){
+        return transferBzi.transferException(userId,sellerId,transferMoney);
+    }
 
 }

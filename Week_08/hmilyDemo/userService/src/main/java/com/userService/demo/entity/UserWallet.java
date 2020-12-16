@@ -33,6 +33,9 @@ public class UserWallet {
     @Column(name = "balance_fee")
     private BigDecimal fee;
 
+    @Column(name = "frozen_fee")
+    private BigDecimal frozenFee;
+
     @Column(name = "create_time")
     private Date createTime;
 

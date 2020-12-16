@@ -101,12 +101,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.dromara</groupId>-->
-<!--			<artifactId>hmily-core</artifactId>-->
-<!--			<version>2.1.1</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>org.dromara</groupId>-->
+		<!--			<artifactId>hmily-core</artifactId>-->
+		<!--			<version>2.1.1</version>-->
+		<!--			<scope>compile</scope>-->
+		<!--		</dependency>-->
 	</dependencies>
 
 	<dependencyManagement>
@@ -145,6 +145,5 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
 
 </project>

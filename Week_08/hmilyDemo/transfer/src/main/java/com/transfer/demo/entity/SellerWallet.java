@@ -12,11 +12,12 @@ import java.util.Date;
 @Data
 public class SellerWallet {
 
-        private long id;
-        private long sellerId;
+        private Long id;
+        private Long sellerId;
         private BigDecimal income;
         private BigDecimal outcome;
         private BigDecimal fee;
+        private BigDecimal frozenFee;
         private Date createTime;
         private Date updateTime;
 }

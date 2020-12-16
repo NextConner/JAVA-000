@@ -14,4 +14,6 @@ public interface ITransferService {
 
     boolean transferToSeller(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney);
 
+    boolean transferToSellerException(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney);
+
 }

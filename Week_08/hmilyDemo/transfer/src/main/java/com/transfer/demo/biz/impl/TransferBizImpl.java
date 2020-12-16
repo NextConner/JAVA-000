@@ -61,5 +61,12 @@ public class TransferBizImpl implements ITransferBzi {
         return transferService.transferToSeller(userWallet,sellerWallet,transferMoney);
     }
 
+    @Override
+    public boolean transferException(Long userId, Long sellerId, BigDecimal transferMoney) {
+        UserWallet userWallet = userFeignClient.getUserWallet(userId);
+        SellerWallet sellerWallet = sellerFeignClient.getSeller(sellerId);
+        return transferService.transferToSellerException(userWallet,sellerWallet,transferMoney);
+    }
+
 
 }
