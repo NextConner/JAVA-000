@@ -6,13 +6,9 @@ import com.transfer.demo.entity.UserWallet;
 import com.transfer.demo.feign.SellerFeignClient;
 import com.transfer.demo.feign.UserFeignClient;
 import com.transfer.demo.service.ITransferService;
-import com.transfer.demo.service.impl.TransferServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.dromara.hmily.annotation.HmilyTCC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -33,13 +29,13 @@ public class TransferBizImpl implements ITransferBzi {
     private SellerFeignClient sellerFeignClient;
 
     @Autowired(required = false)
-    public TransferBizImpl(ITransferService transferService){
+    public TransferBizImpl(ITransferService transferService) {
         this.transferService = transferService;
     }
 
 
     @Override
-    public boolean transfer(Long userId, Long sellerId , BigDecimal transferMoney){
+    public boolean transfer(Long userId, Long sellerId, BigDecimal transferMoney) {
         log.info("transferBiz transfer to seller");
 
         UserWallet userWallet = userFeignClient.getUserWallet(userId);
@@ -57,16 +53,30 @@ public class TransferBizImpl implements ITransferBzi {
             log.info("商户不存在！");
             throw new RuntimeException("商户不存在！");
         }
-
-        return transferService.transferToSeller(userWallet,sellerWallet,transferMoney);
+        //记录一个由当前用户id，商户id和时间戳组成的key
+        String key = userId.toString() + sellerId.toString() + String.valueOf(System.currentTimeMillis());
+        //TCC 方法开始
+        return transferService.transferToSeller(userWallet, sellerWallet, transferMoney, key);
     }
 
     @Override
-    public boolean transferException(Long userId, Long sellerId, BigDecimal transferMoney) {
+    public boolean transferTryException(Long userId, Long sellerId, BigDecimal transferMoney) {
         UserWallet userWallet = userFeignClient.getUserWallet(userId);
         SellerWallet sellerWallet = sellerFeignClient.getSeller(sellerId);
-        return transferService.transferToSellerException(userWallet,sellerWallet,transferMoney);
+        //记录一个由当前用户id，商户id和时间戳组成的key
+        String key = userId.toString() + sellerId.toString() + String.valueOf(System.currentTimeMillis());
+        //模拟 TCC 方法开始
+        return transferService.transferToSellerTryException(userWallet, sellerWallet, transferMoney, key);
     }
 
+    @Override
+    public boolean transferConfirmException(Long userId, Long sellerId, BigDecimal transferMoney) {
+        UserWallet userWallet = userFeignClient.getUserWallet(userId);
+        SellerWallet sellerWallet = sellerFeignClient.getSeller(sellerId);
+        //记录一个由当前用户id，商户id和时间戳组成的key
+        String key = userId.toString() + sellerId.toString() + String.valueOf(System.currentTimeMillis());
+        //模拟 TCC 方法开始
+        return transferService.transferToSellerConfirmException(userWallet, sellerWallet, transferMoney, key);
+    }
 
 }

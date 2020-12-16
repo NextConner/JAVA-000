@@ -13,11 +13,15 @@ import java.util.Date;
 public class SellerWallet {
 
         private Long id;
-        private Long sellerId;
         private BigDecimal income;
         private BigDecimal outcome;
         private BigDecimal fee;
         private BigDecimal frozenFee;
         private Date createTime;
         private Date updateTime;
+
+        @Override
+        public String toString() {
+                return String.format("商户账户信息:余额:%s, 入账:%s, 出账:%s, 冻结金额:%s,更新时间:%s",fee,income,outcome,frozenFee,updateTime);
+        }
 }

@@ -12,7 +12,9 @@ public interface ITransferBzi {
 
     boolean transfer(Long userId, Long sellerId , BigDecimal transferMoney);
 
-    boolean transferException(Long userId, Long sellerId , BigDecimal transferMoney);
+    boolean transferTryException(Long userId, Long sellerId , BigDecimal transferMoney);
+
+    boolean transferConfirmException(Long userId, Long sellerId , BigDecimal transferMoney);
 
 //    public boolean confirm(Long userId, Long sellerId , BigDecimal transferMoney);
 //

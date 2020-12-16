@@ -12,16 +12,8 @@ import java.util.List;
 public interface UserService {
 
 
-    public List<UserWallet> getUserWallet();
-
-    public boolean checkUserWallet(long userId);
-
     public UserWallet getUserWallet(long userId);
 
     public UserWallet saveUserWallet(UserWallet userWallet);
-
-    public UserWallet confirm(UserWallet userWallet);
-
-    public UserWallet cancel(UserWallet userWallet);
 
 }

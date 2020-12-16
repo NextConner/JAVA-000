@@ -10,4 +10,6 @@ public interface ISellerService {
 
     public SellerWallet update(SellerWallet sellerWallet);
 
+    public SellerWallet getSellerWallet(Long id);
+
 }

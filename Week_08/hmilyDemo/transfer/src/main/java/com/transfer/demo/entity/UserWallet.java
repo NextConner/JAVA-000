@@ -14,7 +14,6 @@ import java.util.Date;
 public class UserWallet {
 
     private Long id;
-    private Long userId;
     private BigDecimal income;
     private BigDecimal outcome;
     private BigDecimal fee;
@@ -22,4 +21,8 @@ public class UserWallet {
     private Date createTime;
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return String.format("用户账户信息:余额:%s, 入账:%s, 出账:%s, 冻结金额:%s,更新时间:%s",fee,income,outcome,frozenFee,updateTime);
+    }
 }

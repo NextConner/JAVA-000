@@ -20,8 +20,6 @@ public class SellerWallet {
 
         @Id
         private long id;
-        @Column(name = "seller_id")
-        private long sellerId;
 
         @Column(name = "wallet_income")
         private BigDecimal income;

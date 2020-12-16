@@ -21,8 +21,6 @@ public class UserWallet {
 
     @Id
     private long id;
-    @Column(name = "user_id")
-    private long userId;
 
     @Column(name = "wallet_income")
     private BigDecimal income;

@@ -12,8 +12,10 @@ import java.math.BigDecimal;
 
 public interface ITransferService {
 
-    boolean transferToSeller(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney);
+    boolean transferToSeller(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney,String key);
 
-    boolean transferToSellerException(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney);
+    boolean transferToSellerTryException(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney,String key);
+
+    boolean transferToSellerConfirmException(UserWallet userWallet , SellerWallet sellerWallet, BigDecimal transferMoney,String key);
 
 }

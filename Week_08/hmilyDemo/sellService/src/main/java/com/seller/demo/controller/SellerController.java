@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author: zoujintao@daoran.tv
  * @Date: 2020/12/10 0:12
  */
-//@Slf4j
 @RestController
 @RequestMapping("/seller/v1/")
 public class SellerController {
@@ -30,9 +29,5 @@ public class SellerController {
         return sellerService.update(sellerWallet);
     }
 
-    @RequestMapping("addSellerWallet")
-    public SellerWallet addSellerWallet(@RequestBody SellerWallet sellerWallet){
-        return sellerService.add(sellerWallet);
-    }
 
 }
