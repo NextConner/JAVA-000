@@ -262,13 +262,11 @@ public class TransferServiceImpl implements ITransferService {
     public boolean transferCancel(UserWallet userWallet, SellerWallet sellerWallet, BigDecimal transferMoney, String key) {
 
         log.info("====================================transferCancel=======================");
-
-        //防悬挂
+        //防悬挂？
         if (!hadTry.containsKey(key)) {
             log.info("try 未执行！");
             return false;
         }
-
         if (hadTry.containsKey(key) && !hadTry.get(key)) {
 
             userWallet.setFee(userWallet.getFee().add(transferMoney));

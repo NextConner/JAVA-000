@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * user-service 的feign 类， 提供user-service 的远程调用
  * @Author: zoujintao@daoran.tv
@@ -33,5 +35,8 @@ public interface UserFeignClient {
     @Hmily
     @RequestMapping("/user/v1/updateUserWallet")
     UserWallet updateUserWallet(@RequestBody UserWallet userWallet);
+
+    @RequestMapping("/user/v1/getAllUser")
+    List<UserWallet> getAllUser();
 
 }

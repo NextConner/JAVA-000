@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @Author: zoujintao@daoran.tv
@@ -29,6 +30,11 @@ public class UserController {
     @RequestMapping("updateUserWallet")
     public UserWallet updateUserWallet(@RequestBody UserWallet userWallet){
         return userService.saveUserWallet(userWallet);
+    }
+
+    @RequestMapping("getAllUser")
+    public List<UserWallet> getAllUser(){
+        return userService.getAllUser();
     }
 
 }

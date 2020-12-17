@@ -33,6 +33,11 @@ public class SellerService implements ISellerService {
         return jpa.findById(id).get();
     }
 
+    @Override
+    public List<SellerWallet> getAllSeller() {
+        return jpa.findAll();
+    }
+
     public SellerWallet confirm(SellerWallet sellerWallet){
         log.info("seller update confirm");
         return new SellerWallet();

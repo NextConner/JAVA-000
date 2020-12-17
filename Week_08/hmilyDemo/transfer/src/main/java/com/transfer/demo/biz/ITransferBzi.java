@@ -1,5 +1,6 @@
 package com.transfer.demo.biz;
 
+import com.alibaba.fastjson.JSONObject;
 import org.dromara.hmily.annotation.HmilyTCC;
 
 import java.math.BigDecimal;
@@ -15,6 +16,8 @@ public interface ITransferBzi {
     boolean transferTryException(Long userId, Long sellerId , BigDecimal transferMoney);
 
     boolean transferConfirmException(Long userId, Long sellerId , BigDecimal transferMoney);
+
+    JSONObject getUserAndSellerInfo();
 
 //    public boolean confirm(Long userId, Long sellerId , BigDecimal transferMoney);
 //

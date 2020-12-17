@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * seller-service 的feign类，用于远程调用seller 服务
  * @Author: zoujintao@daoran.tv
@@ -44,5 +46,7 @@ public interface SellerFeignClient {
     @RequestMapping("/seller/v1/addSellerWallet")
     SellerWallet addSeller(@RequestBody SellerWallet sellerWallet);
 
+    @RequestMapping("/seller/v1/getAllSeller")
+    List<SellerWallet> getAllSeller();
 
 }

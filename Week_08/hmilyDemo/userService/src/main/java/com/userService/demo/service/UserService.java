@@ -16,4 +16,5 @@ public interface UserService {
 
     public UserWallet saveUserWallet(UserWallet userWallet);
 
+    List<UserWallet> getAllUser();
 }

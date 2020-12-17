@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @Author: zoujintao@daoran.tv
  * @Date: 2020/12/10 0:12
@@ -29,5 +31,9 @@ public class SellerController {
         return sellerService.update(sellerWallet);
     }
 
+    @RequestMapping("getAllSeller")
+    public List<SellerWallet>  getAllSeller(){
+        return sellerService.getAllSeller();
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.transfer.demo.biz.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.transfer.demo.biz.ITransferBzi;
 import com.transfer.demo.entity.SellerWallet;
 import com.transfer.demo.entity.UserWallet;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @Author: zoujintao@daoran.tv
@@ -77,6 +79,18 @@ public class TransferBizImpl implements ITransferBzi {
         String key = userId.toString() + sellerId.toString() + String.valueOf(System.currentTimeMillis());
         //模拟 TCC 方法开始
         return transferService.transferToSellerConfirmException(userWallet, sellerWallet, transferMoney, key);
+    }
+
+    @Override
+    public JSONObject getUserAndSellerInfo() {
+
+        JSONObject result = new JSONObject();
+        List<UserWallet> userWallets = userFeignClient.getAllUser();
+        List<SellerWallet> sellerWallets = sellerFeignClient.getAllSeller();
+        result.put("users",userWallets.toString());
+        result.put("sellers",sellerWallets.toString());
+
+        return result;
     }
 
 }

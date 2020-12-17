@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
         return userJpa.save(userWallet);
     }
 
+    @Override
+    public List<UserWallet> getAllUser() {
+        return userJpa.findAll();
+    }
+
     public UserWallet confirm(UserWallet userWallet){
         log.info("update userWallet confirm!");
         return new UserWallet();

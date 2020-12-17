@@ -103,6 +103,9 @@ class ShardingDemoApplicationTests {
 	}
 
 
+	/**
+	 *  指定userId 和 orderId 的删改查
+	 */
 	@Test
 	public void testOrderWithUserIdAndOrderId(){
 
@@ -113,12 +116,14 @@ class ShardingDemoApplicationTests {
 			withUserIdAndOrderId.addAll(shardingOrderService.selectList(userIds[i],	orderIds[i])) ;
 		}
 		log.info("查询10个订单信息花费:{}毫秒",System.currentTimeMillis()-start1);
+
 		long startUpdate1 = System.currentTimeMillis();
 		withUserIdAndOrderId.parallelStream().forEach( detail -> {
 			detail.setUpdateTime(new Date());
 			shardingOrderService.update(detail);
 		});
 		log.info("更新10个订单信息花费{}毫秒!",System.currentTimeMillis()-startUpdate1);
+
 		long delStart1 = System.currentTimeMillis();
 		withUserIdAndOrderId.forEach( detail -> shardingOrderService.delOrderDetail(detail));
 		log.info("删除10个订单信息耗费:{}毫秒",System.currentTimeMillis()-delStart1);
