@@ -4,7 +4,6 @@ package io.kimmking.rpcfx.client;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import io.kimmking.rpcfx.annotation.RpcServiceCreate;
-import io.kimmking.rpcfx.annotation.RpcServiceTag;
 import io.kimmking.rpcfx.api.*;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -39,12 +38,14 @@ public final class Rpcfx {
 
     }
 
+    // UserService.class, "http://localhost:8080/",null
+
     @RpcServiceCreate(withFilter = true)
     public static <T> T create(final Class<T> serviceClass, final String url, Filter filter) {
 
         // 0. 替换动态代理 -> AOP
-        return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass, url, filter));
-
+        T result =  (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass, url, filter));
+        return result;
     }
 
     public static class RpcfxInvocationHandler implements InvocationHandler {
@@ -72,11 +73,14 @@ public final class Rpcfx {
             // mock == true, new Student("hubao");
 
             RpcfxRequest request = new RpcfxRequest();
-            request.setServiceClass(this.serviceClass.getName());
+            request.setServiceClass(this.serviceClass);
             request.setMethod(method.getName());
             request.setParams(params);
 
             for (Filter filter : filters) {
+                if(null == filter){
+                    continue;
+                }
                 if(!filter.filter(request)) {
                     return null;
                 }

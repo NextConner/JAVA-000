@@ -1,34 +1,40 @@
 package io.kimmking.rpcfx.api;
 
-public class RpcfxRequest<T> {
+import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
 
-  private T serviceClass;
+import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicLong;
 
-  private String method;
+/**
+ * @author TaoGeZou
+ */
+@Data
+public class RpcfxRequest<T> implements Serializable {
 
-  private Object[] params;
+    private static final long serialVersionUID = -5809782578272943999L;
 
-    public T getServiceClass() {
-        return serviceClass;
+    private long requestId = 1;
+
+    private Class<T> serviceClass;
+
+    private String method;
+
+    private Object[] params;
+
+    private AtomicLong requestPool = new AtomicLong(1);
+
+    public RpcfxRequest(){
+        requestId = requestPool.getAndIncrement();
     }
 
-    public void setServiceClass(T serviceClass) {
-        this.serviceClass = serviceClass;
-    }
 
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public Object[] getParams() {
-        return params;
-    }
-
-    public void setParams(Object[] params) {
-        this.params = params;
+    @Override
+    public String toString() {
+        JSONObject json = new JSONObject();
+        json.put("serviceClass",serviceClass);
+        json.put("method",method);
+        json.put("params",params);
+        return json.toJSONString();
     }
 }

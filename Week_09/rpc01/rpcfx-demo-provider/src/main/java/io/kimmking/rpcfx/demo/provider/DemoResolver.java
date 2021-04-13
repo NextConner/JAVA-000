@@ -4,6 +4,8 @@ import io.kimmking.rpcfx.api.RpcfxResolver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.util.Map;
+
 public class DemoResolver implements RpcfxResolver, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -16,5 +18,10 @@ public class DemoResolver implements RpcfxResolver, ApplicationContextAware {
     @Override
     public Object resolve(String serviceClass) {
         return this.applicationContext.getBean(serviceClass);
+    }
+
+    @Override
+    public <T> Map<String, T> resolve(Class<T> clazz) {
+        return this.applicationContext.getBeansOfType(clazz);
     }
 }
